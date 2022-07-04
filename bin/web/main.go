@@ -17,8 +17,8 @@ func main() {
 
 	}
 
-	//something
 	c := service.New(db)
+	service.SeedData(c)
 	web.RegisterAPIRoutes(c)
 	c.Web.Run()
 }

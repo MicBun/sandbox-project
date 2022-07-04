@@ -20,7 +20,7 @@ type Order struct {
 	Height              float32
 	Width               float32
 	Length              float32
-	UserID              int `gorm:"not_null"`
+	UserID              uint `gorm:"not_null"`
 	User                User
 }
 
