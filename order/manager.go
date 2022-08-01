@@ -20,7 +20,11 @@ func (o *OrderManager) SaveOrder(order *core.Order) error {
 	return o.db.Save(order).Error
 }
 
-func (o *OrderManager) ListOrders() (orders []core.Order, err error) {
-	err = o.db.Model(core.Order{}).Find(&orders).Error
+func (o *OrderManager) ListOrders(filter core.OrderFilter) (orders []core.Order, err error) {
+	q := o.db.Model(core.Order{})
+	if filter.UserID != "" {
+		q = q.Where("user_id = ?", filter.UserID)
+	}
+	err = q.Find(&orders).Error
 	return orders, err
 }

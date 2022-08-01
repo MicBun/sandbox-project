@@ -11,17 +11,23 @@ type User struct {
 type Order struct {
 	gorm.Model
 	TrackingNumber      string `gorm:"unique"`
+	ConsigneeName       string
+	ConsigneeNumber     string
 	ConsigneeAddress    string
 	ConsigneeCity       string
 	ConsigneeProvince   string
 	ConsigneePostalCode string
 	ConsigneeCountry    string
+	PaymentType         string
 	Weight              float32
 	Height              float32
 	Width               float32
 	Length              float32
-	UserID              uint `gorm:"not_null"`
-	User                User
+	UserID              string
+}
+
+type OrderFilter struct {
+	UserID string
 }
 
 type ServiceProvider struct {

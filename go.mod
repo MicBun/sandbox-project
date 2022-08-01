@@ -4,10 +4,13 @@ go 1.18
 
 require (
 	github.com/gin-gonic/gin v1.7.7
+	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/stretchr/testify v1.7.0
 	gorm.io/driver/sqlite v1.3.2
 	gorm.io/gorm v1.23.5
 )
+
+require gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
@@ -16,6 +19,7 @@ require (
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-playground/validator/v10 v10.11.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
+	github.com/google/uuid v1.3.0
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect

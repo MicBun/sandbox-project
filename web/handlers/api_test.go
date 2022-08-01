@@ -13,7 +13,10 @@ import (
 
 func TestHelloEndpoint(t *testing.T) {
 	web.RunTest(func(c *service.Container) {
-		w, err := web.MakeRequest(c.Web, http.MethodGet, "/hello", nil)
+		headers := map[string]string{
+			"Authorization": "abc123",
+		}
+		w, err := web.MakeRequest(c.Web, http.MethodGet, "/hello", nil, headers)
 
 		assert.NoError(t, err)
 		assert.Equal(t, http.StatusOK, w.Code)
@@ -39,10 +42,15 @@ func TestGetOrders(t *testing.T) {
 			Height:              2,
 			Width:               3,
 			Length:              4,
+			UserID:              "abc123",
 		}
 		err := c.OrdersManager.SaveOrder(&testOrder)
 		assert.NoError(t, err)
-		w, err := web.MakeRequest(c.Web, http.MethodGet, "/orders", nil)
+
+		headers := map[string]string{
+			"Authorization": "abc123",
+		}
+		w, err := web.MakeRequest(c.Web, http.MethodGet, "/orders", nil, headers)
 		assert.NoError(t, err)
 
 		assert.Equal(t, http.StatusOK, w.Code)

@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"math/rand"
 	"sandbox/core"
 )
@@ -29,7 +30,7 @@ func generateOrder(userID uint) core.Order {
 		Height:              3,
 		Width:               4,
 		Length:              5,
-		UserID:              userID,
+		UserID:              fmt.Sprintf("%d", userID),
 	}
 }
 
