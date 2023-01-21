@@ -8,13 +8,18 @@ import (
 	"gorm.io/gorm"
 )
 
-type Auth struct {
-	db *gorm.DB
+type AuthInterface interface {
+	RegisterUser(email, password string) (core.User, error)
+	AuthenticateUser(email, password string) (core.User, error)
 }
 
-func CreateAuth(db *gorm.DB) *Auth {
+type Auth struct {
+	Db *gorm.DB
+}
+
+func CreateAuth(db *gorm.DB) AuthInterface {
 	return &Auth{
-		db: db,
+		Db: db,
 	}
 }
 
@@ -28,13 +33,13 @@ func (a *Auth) RegisterUser(email, password string) (core.User, error) {
 		Email:    email,
 		Password: hash(password),
 	}
-	err := a.db.Save(&user).Error
+	err := a.Db.Save(&user).Error
 	return user, err
 }
 
 func (a *Auth) AuthenticateUser(email, password string) (core.User, error) {
 	var user core.User
-	err := a.db.Model(core.User{}).Where("email = ?", email).First(&user).Error
+	err := a.Db.Model(core.User{}).Where("email = ?", email).First(&user).Error
 	if err != nil {
 		return user, fmt.Errorf("Unable to retrieve user %w", err)
 	}

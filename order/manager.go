@@ -6,21 +6,26 @@ import (
 	"gorm.io/gorm"
 )
 
-type OrderManager struct {
-	db *gorm.DB
+type OrderManagerInterface interface {
+	SaveOrder(order *core.Order) error
+	ListOrders() ([]core.Order, error)
 }
 
-func NewManager(db *gorm.DB) *OrderManager {
+type OrderManager struct {
+	Db *gorm.DB
+}
+
+func NewManager(db *gorm.DB) OrderManagerInterface {
 	return &OrderManager{
-		db: db,
+		Db: db,
 	}
 }
 
 func (o *OrderManager) SaveOrder(order *core.Order) error {
-	return o.db.Save(order).Error
+	return o.Db.Save(order).Error
 }
 
 func (o *OrderManager) ListOrders() (orders []core.Order, err error) {
-	err = o.db.Model(core.Order{}).Find(&orders).Error
+	err = o.Db.Model(core.Order{}).Find(&orders).Error
 	return orders, err
 }

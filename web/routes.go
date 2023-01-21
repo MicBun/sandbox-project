@@ -1,6 +1,8 @@
 package web
 
 import (
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"sandbox/service"
 	"sandbox/web/handlers"
 )
@@ -10,4 +12,6 @@ func RegisterAPIRoutes(c *service.Container) {
 
 	c.Web.GET("/hello", api.Hello)
 	c.Web.GET("/orders", api.GetOrders)
+
+	c.Web.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 }

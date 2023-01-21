@@ -11,8 +11,8 @@ import (
 type Container struct {
 	Web           *gin.Engine
 	DB            *gorm.DB
-	OrdersManager *order.OrderManager
-	Auth          *auth.Auth
+	OrdersManager order.OrderManagerInterface
+	Auth          auth.AuthInterface
 }
 
 func New(mainDB *gorm.DB) *Container {

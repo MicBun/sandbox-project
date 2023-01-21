@@ -24,5 +24,8 @@ func TestAuthUser(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, "foo@bar.com", u2.Email)
 		assert.Equal(t, u.ID, u2.ID)
+
+		_, err = a.AuthenticateUser("notUser@bar.com", "securePassword")
+		assert.Error(t, err)
 	})
 }

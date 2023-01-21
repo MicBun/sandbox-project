@@ -1,0 +1,19 @@
+mode: set
+sandbox/auth/auth.go:20.44,24.2 1 1
+sandbox/auth/auth.go:26.32,29.2 2 1
+sandbox/auth/auth.go:31.72,38.2 3 1
+sandbox/auth/auth.go:40.76,43.16 3 1
+sandbox/auth/auth.go:47.2,48.24 2 1
+sandbox/auth/auth.go:52.2,52.18 1 1
+sandbox/auth/auth.go:43.16,45.3 1 1
+sandbox/auth/auth.go:48.24,50.3 1 1
+sandbox/order/manager.go:18.52,22.2 1 1
+sandbox/order/manager.go:24.59,26.2 1 1
+sandbox/order/manager.go:28.70,31.2 2 1
+sandbox/web/handlers/api.go:18.70,22.2 1 1
+sandbox/web/handlers/api.go:32.44,35.2 2 1
+sandbox/web/handlers/api.go:59.48,61.16 2 1
+sandbox/web/handlers/api.go:66.2,67.27 2 1
+sandbox/web/handlers/api.go:82.2,83.8 2 1
+sandbox/web/handlers/api.go:61.16,64.3 2 0
+sandbox/web/handlers/api.go:67.27,80.3 1 1
