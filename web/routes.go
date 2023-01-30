@@ -13,5 +13,7 @@ func RegisterAPIRoutes(c *service.Container) {
 	c.Web.GET("/hello", api.Hello)
 	c.Web.GET("/orders", api.GetOrders)
 
+	// c.Web.GET("/pokemon", handlers.GetPokemon)
+
 	c.Web.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 }

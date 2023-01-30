@@ -8,6 +8,8 @@ import (
 	"sandbox/web"
 	"testing"
 
+	"fmt"
+
 	"github.com/stretchr/testify/assert"
 )
 
@@ -28,26 +30,50 @@ func TestHelloEndpoint(t *testing.T) {
 
 func TestGetOrders(t *testing.T) {
 	web.RunTest(func(c *service.Container) {
-		testOrder := core.Order{
-			TrackingNumber:      "ABC123",
-			ConsigneeAddress:    "Jalan Something",
-			ConsigneeCity:       "Denpasar",
-			ConsigneeProvince:   "Bali",
-			ConsigneePostalCode: "1234",
-			ConsigneeCountry:    "ID",
-			Weight:              1,
-			Height:              2,
-			Width:               3,
-			Length:              4,
+		testOrder := func() []core.Order {
+			var orders []core.Order
+			for i := 0; i < 10; i++ {
+				orders = append(orders, core.Order{
+					TrackingNumber:      "ABC123" + fmt.Sprint(i),
+					ConsigneeAddress:    "Jalan Something",
+					ConsigneeCity:       "Denpasar",
+					ConsigneeProvince:   "Bali",
+					ConsigneePostalCode: "1234",
+					ConsigneeCountry:    "ID",
+					Weight:              1,
+					Height:              2,
+					Width:               3,
+					Length:              4,
+				})
+			}
+			return orders
+		}()
+
+		// testOrder := core.Order{
+		// TrackingNumber:      "ABC123",
+		// ConsigneeAddress:    "Jalan Something",
+		// ConsigneeCity:       "Denpasar",
+		// ConsigneeProvince:   "Bali",
+		// ConsigneePostalCode: "1234",
+		// ConsigneeCountry:    "ID",
+		// Weight:              1,
+		// Height:              2,
+		// Width:               3,
+		// Length:              4,
+		// }
+		for _, order := range testOrder {
+			err := c.OrdersManager.SaveOrder(&order)
+			assert.NoError(t, err)
 		}
-		err := c.OrdersManager.SaveOrder(&testOrder)
-		assert.NoError(t, err)
+		// err := c.OrdersManager.SaveOrder(&testOrder[0])
+		// assert.NoError(t, err)
 		w, err := web.MakeRequest(c.Web, http.MethodGet, "/orders", nil)
 		assert.NoError(t, err)
 
 		assert.Equal(t, http.StatusOK, w.Code)
 		var resp struct {
 			Data []struct {
+				ID                  uint
 				TrackingNumber      string
 				ConsigneeAddress    string
 				ConsigneeCity       string
@@ -63,7 +89,17 @@ func TestGetOrders(t *testing.T) {
 		err = json.Unmarshal(w.Body.Bytes(), &resp)
 		assert.NoError(t, err)
 		assert.Len(t, resp.Data, 1)
-		assert.Equal(t, testOrder.TrackingNumber, resp.Data[0].TrackingNumber)
-		assert.Equal(t, testOrder.ConsigneeAddress, resp.Data[0].ConsigneeAddress)
+		assert.Equal(t, testOrder[0].TrackingNumber, resp.Data[0].TrackingNumber)
+		assert.Equal(t, testOrder[0].ConsigneeAddress, resp.Data[0].ConsigneeAddress)
+		assert.Equal(t, uint(1), resp.Data[0].ID)
+
+		w, err = web.MakeRequest(c.Web, http.MethodGet, "/orders?limit=2&offset=0", nil)
+		err = json.Unmarshal(w.Body.Bytes(), &resp)
+		assert.NoError(t, err)
+		assert.Equal(t, http.StatusOK, w.Code)
+		assert.Equal(t, testOrder[0].ConsigneeAddress, resp.Data[0].ConsigneeAddress)
+		assert.Equal(t, uint(1), resp.Data[0].ID)
+		assert.Equal(t, 2, len(resp.Data))
+
 	})
 }
