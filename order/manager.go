@@ -26,7 +26,6 @@ func (o *OrderManager) SaveOrder(order *core.Order) error {
 }
 
 func (o *OrderManager) ListOrders(limit int, offset int) (orders []core.Order, err error) {
-	// err = o.Db.Model(core.Order{}).Find(&orders).Error
 	err = o.Db.Model(core.Order{}).Limit(limit).Offset(offset).Find(&orders).Error
 
 	return orders, err
