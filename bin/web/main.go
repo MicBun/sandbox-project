@@ -11,7 +11,8 @@ import (
 )
 
 func main() {
-	rand.Seed(time.Now().UnixNano())
+	rand.NewSource(time.Now().UnixNano())
+
 	db, err := database.Connect()
 	if err != nil {
 		log.Fatalf("Unable to connect to db %v", err)

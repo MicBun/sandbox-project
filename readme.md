@@ -7,6 +7,7 @@ The project includes the following make commands:
 * `make test` to run the test suite
 * `make build` to build the project
 * `make coverage` to run the test suite and generate a coverage report
+* `make swagger` to generate the swagger documentation
 
 ### Live Swagger Documentation
 

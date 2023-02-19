@@ -14,7 +14,86 @@ const docTemplate = `{
     },
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
-    "paths": {}
+    "paths": {
+        "/hello": {
+            "get": {
+                "description": "Hello",
+                "tags": [
+                    "Hello"
+                ],
+                "summary": "Hello",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/orders": {
+            "get": {
+                "description": "GetOrders",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "GetOrders"
+                ],
+                "summary": "GetOrders",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.orderResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "handlers.orderResponse": {
+            "type": "object",
+            "properties": {
+                "consigneeAddress": {
+                    "type": "string"
+                },
+                "consigneeCity": {
+                    "type": "string"
+                },
+                "consigneeCountry": {
+                    "type": "string"
+                },
+                "consigneePostalCode": {
+                    "type": "string"
+                },
+                "consigneeProvince": {
+                    "type": "string"
+                },
+                "height": {
+                    "type": "number"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "length": {
+                    "type": "number"
+                },
+                "trackingNumber": {
+                    "type": "string"
+                },
+                "weight": {
+                    "type": "number"
+                },
+                "width": {
+                    "type": "number"
+                }
+            }
+        }
+    }
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it

@@ -13,8 +13,8 @@ func TestSaveAndGetOrders(t *testing.T) {
 	database.RunTest(func(db *gorm.DB) {
 		om := NewManager(db)
 		{
-			orders, err := om.ListOrders(1,0)
-			assert.NoError(t, err)
+			orders, err := om.ListOrders(1, 0)
+			assert.Error(t, err)
 			assert.Len(t, orders, 0)
 		}
 
@@ -48,17 +48,17 @@ func TestSaveAndGetOrders(t *testing.T) {
 		err = om.SaveOrder(&testOrder2)
 		assert.NoError(t, err)
 
-		orders, err := om.ListOrders(1,0)
+		orders, err := om.ListOrders(1, 0)
 		assert.NoError(t, err)
 		assert.Len(t, orders, 1)
 
-		orders2, err := om.ListOrders(2,0)
+		orders2, err := om.ListOrders(2, 0)
 		assert.NoError(t, err)
 		assert.Len(t, orders2, 2)
 
-		orders3, err := om.ListOrders(1,1)
+		orders3, err := om.ListOrders(1, 1)
 		assert.NoError(t, err)
 		assert.Len(t, orders3, 1)
-		
+
 	})
 }

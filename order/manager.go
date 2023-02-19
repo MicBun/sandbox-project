@@ -1,6 +1,7 @@
 package order
 
 import (
+	"errors"
 	"sandbox/core"
 
 	"gorm.io/gorm"
@@ -27,6 +28,8 @@ func (o *OrderManager) SaveOrder(order *core.Order) error {
 
 func (o *OrderManager) ListOrders(limit int, offset int) (orders []core.Order, err error) {
 	err = o.Db.Model(core.Order{}).Limit(limit).Offset(offset).Find(&orders).Error
-
+	if len(orders) == 0 {
+		err = errors.New("no orders found")
+	}
 	return orders, err
 }

@@ -1,4 +1,55 @@
+definitions:
+  handlers.orderResponse:
+    properties:
+      consigneeAddress:
+        type: string
+      consigneeCity:
+        type: string
+      consigneeCountry:
+        type: string
+      consigneePostalCode:
+        type: string
+      consigneeProvince:
+        type: string
+      height:
+        type: number
+      id:
+        type: integer
+      length:
+        type: number
+      trackingNumber:
+        type: string
+      weight:
+        type: number
+      width:
+        type: number
+    type: object
 info:
   contact: {}
-paths: {}
+paths:
+  /hello:
+    get:
+      description: Hello
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Hello
+      tags:
+      - Hello
+  /orders:
+    get:
+      description: GetOrders
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.orderResponse'
+      summary: GetOrders
+      tags:
+      - GetOrders
 swagger: "2.0"

@@ -101,5 +101,7 @@ func TestGetOrders(t *testing.T) {
 		assert.Equal(t, uint(1), resp.Data[0].ID)
 		assert.Equal(t, 2, len(resp.Data))
 
+		w, err = web.MakeRequest(c.Web, http.MethodGet, "/orders?limit=1&offset=20", nil)
+		assert.Equal(t, http.StatusInternalServerError, w.Code)
 	})
 }

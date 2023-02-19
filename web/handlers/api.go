@@ -23,13 +23,11 @@ func NewApiHandler(container *service.Container) ApiHandlerInterface {
 }
 
 // Hello godoc
-//
-//	@Summary		Hello
-//	@Description	Hello
-//	@Tags			Hello
-//	@Produce		json
-//	@Success		200	{object}	string
-//	@Router			/hello [get]
+// @Summary Hello
+// @Description Hello
+// @Tags Hello
+// @Success 200 {object} map[string]interface{}
+// @Router /hello [get]
 func (h *apiHandler) Hello(c *gin.Context) {
 	c.JSON(200, gin.H{"message": "Hello"})
 	return
@@ -61,11 +59,11 @@ type orderResponse struct {
 func (h *apiHandler) GetOrders(c *gin.Context) {
 	limit, err := strconv.Atoi(c.Query("limit"))
 	if err != nil {
-		limit = 1
+		limit = -1
 	}
 	offset, err := strconv.Atoi(c.Query("offset"))
 	if err != nil {
-		offset = 0
+		offset = -1
 	}
 	orders, err := h.container.OrdersManager.ListOrders(limit, offset)
 	if err != nil {
