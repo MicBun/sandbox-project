@@ -88,7 +88,7 @@ func TestGetOrders(t *testing.T) {
 		}
 		err = json.Unmarshal(w.Body.Bytes(), &resp)
 		assert.NoError(t, err)
-		assert.Len(t, resp.Data, 1)
+		assert.Len(t, resp.Data, 10)
 		assert.Equal(t, testOrder[0].TrackingNumber, resp.Data[0].TrackingNumber)
 		assert.Equal(t, testOrder[0].ConsigneeAddress, resp.Data[0].ConsigneeAddress)
 		assert.Equal(t, uint(1), resp.Data[0].ID)
